@@ -1,21 +1,21 @@
-ParanoidAndroid
+ParanoidKang
 ===============
 
 Getting started
 ---------------
 First you must initialize a repository with our sources:
 
-    repo init -u git://github.com/ParanoidAndroid/manifest.git -b jellybean
+    repo init -u git://github.com/ParanoidKang/manifest.git -b jellybean
 
 Then sync it up (This will take a while, so get a cup of coffee and some snickers):
 
     repo sync
 
 
-Building ParanoidAndroid
+Building ParanoidKang
 ------------------------
 
-For building ParanoidAndroid you must cd to the working directory.
+For building ParanoidKang you must cd to the working directory.
 Make sure you have your device tree sources, located on
 
     cd device/-manufacturer-/-device-
