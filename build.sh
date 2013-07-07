@@ -36,11 +36,6 @@ else
    UPLOAD="$4"
 fi
 
-export USE_CCACHE=1
-export CCACHE_DIR=~/.ccache
-# set ccache due to your disk space,set it at your own risk
-$DIR/prebuilts/misc/linux-x86/ccache/ccache -M 15G
-
 # get time of startup
 res1=$(date +%s.%N)
 
@@ -54,25 +49,47 @@ echo -e "${cya}"
 ./vendor/pa/tools/getdevicetree.py $DEVICE
 echo -e "${txtrst}"
 
-# decide what command to execute
-case "$EXTRAS" in
-   threads)
-       echo -e "${bldblu}Please write desired threads followed by [ENTER] ${txtrst}"
-       read threads
-       THREADS=$threads;;
-   clean)
-       echo -e ""
-       echo -e "${bldblu}Cleaning intermediates and output files ${txtrst}"
-       make clean > /dev/null;;
-esac
+export USE_CCACHE=1
+export CCACHE_DIR=~/.ccache
+# set ccache due to your disk space,set it at your own risk
+$DIR/prebuilts/misc/linux-x86/ccache/ccache -M 15G
 
-# sync with latest sources
+fix_count=0
+# excute with vars
 echo -e ""
-if [ "$SYNC" == "true" ]
+for var in $* ; do
+if [ "$var" == "sync" ]
 then
    echo -e "${bldblu}Fetching latest sources ${txtrst}"
-   repo sync -j"$THREADS"
+   if [ -d "$ADDON" ]
+   then
+      echo -e "fetching add-on repo"
+      echo -e "change this at script line 28"
+      cd $ADDON
+      git pull
+      cd $DIR
+      echo -e "=============================================="
+   fi
+   repo sync
    echo -e ""
+elif [ "$var" == "clean" ]
+then
+   echo -e "${bldblu}Clearing previous build info ${txtrst}"
+   mka installclean
+elif [ "$var" == "allclean" ]
+then
+   echo -e "${bldblu}Clearing build path ${txtrst}"
+   mka clean
+elif [ "$var" == "fix" ]
+then
+   echo -e "skip for remove build.prop"
+   fix_count=1
+fi
+done
+if [ "$fix_count" == "0" ]
+then
+   echo -e "removing build.prop"
+   rm -f $OUT_DIR/system/build.prop
 fi
 
 # setup environment
@@ -86,6 +103,9 @@ lunch "pa_$DEVICE-userdebug";
 
 echo -e ""
 echo -e "${bldblu}Starting compilation ${txtrst}"
+
+echo "cleaning build.prop..."
+rm -f /android/pa/out/target/product/$DEVICE/system/build.prop
 
 # start compilation
 mka bacon
