@@ -54,6 +54,15 @@ export CCACHE_DIR=~/.ccache
 # set ccache due to your disk space,set it at your own risk
 $DIR/prebuilts/misc/linux-x86/ccache/ccache -M 15G
 
+# setup environment
+echo -e "${bldblu}Setting up environment ${txtrst}"
+. build/envsetup.sh
+
+# lunch device
+echo -e ""
+echo -e "${bldblu}Lunching device ${txtrst}"
+lunch "pa_$DEVICE-userdebug";
+
 fix_count=0
 # excute with vars
 echo -e ""
@@ -89,23 +98,11 @@ done
 if [ "$fix_count" == "0" ]
 then
    echo -e "removing build.prop"
-   rm -f $OUT_DIR/system/build.prop
+   rm -f $DIR/out/target/product/$DEVICE/system/build.prop
 fi
-
-# setup environment
-echo -e "${bldblu}Setting up environment ${txtrst}"
-. build/envsetup.sh
-
-# lunch device
-echo -e ""
-echo -e "${bldblu}Lunching device ${txtrst}"
-lunch "pa_$DEVICE-userdebug";
 
 echo -e ""
 echo -e "${bldblu}Starting compilation ${txtrst}"
-
-echo "cleaning build.prop..."
-rm -f /android/pa/out/target/product/$DEVICE/system/build.prop
 
 # start compilation
 mka bacon
