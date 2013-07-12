@@ -20,6 +20,12 @@ THREADS="16"
 DEVICE="$1"
 EXTRAS="$2"
 
+if [ "kang$DEVICE" == "kang" ]
+then
+   echo "error: missing device name"
+   exit
+fi
+
 # get current version
 MAJOR=$(cat $DIR/vendor/pa/config/pa_common.mk | grep 'PA_VERSION_MAJOR = *' | sed  's/PA_VERSION_MAJOR = //g')
 MINOR=$(cat $DIR/vendor/pa/config/pa_common.mk | grep 'PA_VERSION_MINOR = *' | sed  's/PA_VERSION_MINOR = //g')
