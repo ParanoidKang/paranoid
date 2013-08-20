@@ -51,10 +51,6 @@ clear
 
 echo -e "${cya}Building ${bldcya}RemixPA v$VERSION ${txtrst}";
 
-echo -e "${cya}"
-./vendor/pa/tools/getdevicetree.py $DEVICE
-echo -e "${txtrst}"
-
 export USE_CCACHE=1
 export CCACHE_DIR=~/.ccache
 # set ccache due to your disk space,set it at your own risk
