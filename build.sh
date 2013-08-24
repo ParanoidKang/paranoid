@@ -56,6 +56,11 @@ export CCACHE_DIR=~/.ccache
 # set ccache due to your disk space,set it at your own risk
 $DIR/prebuilts/misc/linux-x86/ccache/ccache -M 15G
 
+# java setup
+echo -e "${bldblu}Setting up java ${txtrst}"
+. /vendor/pa/tools/setupjava.sh
+cho -e ""
+
 # setup environment
 echo -e "${bldblu}Setting up environment ${txtrst}"
 . build/envsetup.sh
