@@ -66,6 +66,7 @@ echo -e "${bldblu}Lunching device ${txtrst}"
 lunch "pa_$DEVICE-userdebug";
 
 fix_count=0
+release_flag=0
 # excute with vars
 echo -e ""
 for var in $* ; do
@@ -95,8 +96,12 @@ elif [ "$var" == "fix" ]
 then
    echo -e "skip for remove build.prop"
    fix_count=1
+elif [ "$var" == "release" ]
+then
+   release_flag=1
 fi
 done
+
 if [ "$fix_count" == "0" ]
 then
    echo -e "removing build.prop"
@@ -113,3 +118,9 @@ echo -e ""
 # finished? get elapsed time
 res2=$(date +%s.%N)
 echo "${bldgrn}Total time elapsed: ${txtrst}${grn}$(echo "($res2 - $res1) / 60"|bc ) minutes ($(echo "$res2 - $res1"|bc ) seconds) ${txtrst}"
+if [ "$release_flag" == "1" ]
+then
+   mkdir -p out/target/OTA_INPUT
+   echo "copying release file to ota input path"
+   cp `cat out/target/product/$DEVICE/romPath` out/target/OTA_INPUT/$DEVICE
+fi
