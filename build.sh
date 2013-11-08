@@ -114,5 +114,5 @@ if [ "$release_flag" == "1" ]
 then
    mkdir -p out/target/OTA_INPUT
    echo "copying release file to ota input path"
-   cp `cat out/target/product/$DEVICE/romPath` out/target/OTA_INPUT/$DEVICE
+   cp `cat out/target/product/$DEVICE/romPath` out/target/OTA_INPUT/$DEVICE/`cat out/target/product/$DEVICE/romName`
 fi
