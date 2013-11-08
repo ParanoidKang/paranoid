@@ -88,6 +88,8 @@ then
 elif [ "$var" == "release" ]
 then
    release_flag=1
+else
+   echo -e "running..."
 fi
 done
 
