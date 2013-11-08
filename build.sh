@@ -18,7 +18,6 @@ txtrst=$(tput sgr0)             # Reset
 
 THREADS="16"
 DEVICE="$1"
-EXTRAS="$2"
 
 if [ "kang$DEVICE" == "kang" ]
 then
@@ -31,16 +30,6 @@ MAJOR=$(cat $DIR/vendor/pa/config/pa_common.mk | grep 'PA_VERSION_MAJOR = *' | s
 MINOR=$(cat $DIR/vendor/pa/config/pa_common.mk | grep 'PA_VERSION_MINOR = *' | sed  's/PA_VERSION_MINOR = //g')
 MAINTENANCE=$(cat $DIR/vendor/pa/config/pa_common.mk | grep 'PA_VERSION_MAINTENANCE = *' | sed  's/PA_VERSION_MAINTENANCE = //g')
 VERSION=$MAJOR.$MINOR$MAINTENANCE
-
-# if we have not extras, reduce parameter index by 1
-if [ "$EXTRAS" == "true" ] || [ "$EXTRAS" == "false" ]
-then
-   SYNC="$2"
-   UPLOAD="$3"
-else
-   SYNC="$3"
-   UPLOAD="$4"
-fi
 
 # get time of startup
 res1=$(date +%s.%N)
