@@ -88,6 +88,7 @@ then
 elif [ "$var" == "release" ]
 then
    release_flag=1
+   echo -e "${cya}Building release package ${txtrst}"
 else
    echo -e "running..."
 fi
